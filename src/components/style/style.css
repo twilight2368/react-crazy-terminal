@@ -1,0 +1,75 @@
+::selection {
+  color: var(--light-red);
+  text-shadow: 0.75px 0.75px var(--dark-red);
+  background-color: var(--light-crystal);
+}
+
+.terminal {
+  background-color: var(--dark-black);
+  min-height: calc(100vh - 2rem);
+  padding: 1rem;
+  margin: 0;
+}
+
+.command-line {
+  color: var(--white);
+  position: relative;
+  overflow-wrap: break-word;
+  overflow: auto;
+}
+.command-line::before {
+  content: "twilight@code:~$ ";
+  color: var(--light-green);
+  text-shadow: 1px 1px var(--dark-green);
+  margin-right: 8px;
+  display: inline; /* Ensure inline display */
+  white-space: nowrap; /* Prevent line breaks */
+}
+.command-text-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.0;
+  z-index: -10;
+}
+
+.command-text-input > input {
+  width: 100%;
+}
+
+.cursor-animation {
+  color: var(--light-black);
+  background-color: var(--light-blue);
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  position: relative;
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  opacity: 1;
+}
+
+.cursor-no-animation {
+  color: var(--light-black);
+  background-color: var(--light-blue);
+  user-select: none;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.highlighted-command {
+  color: var(--light-red);
+  text-shadow: 1px 1px var(--dark-red);
+  background-color: var(--light-crystal);
+}

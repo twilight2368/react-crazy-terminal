@@ -1,38 +1,24 @@
-.App {
-  text-align: center;
+*:root {
+  /*NOTE: using BROADCAST theme for the crazy terminal*/
+  --dark-black: #000000;
+  --dark-red: #da4939;
+  --dark-green: #519f50;
+  --dark-yellow: #ffd24a;
+  --dark-blue: #6d9cbe;
+  --dark-crystal: #6e9cbe;
+  --dark-purple: #d0d0ff;
+  --light-black: #323232;
+  --light-red: #ff7b6b;
+  --light-green: #83d182;
+  --light-yellow: #ffff7c;
+  --light-blue: #9fcef0;
+  --light-crystal: #a0cef0;
+  --white: #ffffff; 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-family: monospace;
 }
