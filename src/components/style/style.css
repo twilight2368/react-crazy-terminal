@@ -178,3 +178,21 @@
   text-shadow: 1px 1px var(--dark-yellow);
 
 }
+
+.pass-input{
+  width: 100%;
+  min-height: 4rem;
+  overflow-wrap: break-word;
+  cursor: text;
+}
+
+.pass-input-star{
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+.pass-input-text{
+  opacity: 0;
+  position: relative;
+  z-index: -10;
+}

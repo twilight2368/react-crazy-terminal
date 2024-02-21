@@ -10,24 +10,6 @@ export default function InputCommand(props) {
   const [historycommand, setHistoryCommand] = useState();
   const input_command = useRef(null);
 
-  function focusInput() {
-    input_command.current.focus();
-    setHighlight(false);
-    //console.log("hi");
-  }
-
-  useEffect(() => {
-    document
-      .getElementById("focus-input-area")
-      .addEventListener("click", focusInput);
-
-    return () => {
-      document
-        .getElementById("focus-input-area")
-        .removeEventListener("click", focusInput);
-    };
-  }, []);
-
   useEffect(() => {
     input_command.current.focus();
   });
@@ -39,7 +21,11 @@ export default function InputCommand(props) {
 
   return (
     <>
-      <div className="command-line" id="focus-input-area">
+      <div className="command-line" onClick={()=>{
+        input_command.current.focus();
+        setHighlight(false);
+        //console.log("hi");
+      }}>
         <span
           className={highlight ? "highlighted-command" : ""}
           style={{ zIndex: "100" }}

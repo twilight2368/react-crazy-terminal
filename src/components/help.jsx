@@ -31,7 +31,7 @@ export default function DisplayHelp(props) {
                 <div style={{ width: "8rem", color: "var(--light-blue)", textShadow:"1px 1px 1px var(--dark-blue)" }}>
                   {props.commandList[index].command}
                 </div>
-                <div style={{color:'var(--comment)', fontStyle:"italic"}}>{props.commandList[index].comment}</div>
+                <div style={{color:'var(--comment)'}}>{props.commandList[index].comment}</div>
                 <br />
               </div>
             </>

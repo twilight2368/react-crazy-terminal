@@ -6,26 +6,28 @@ import DateDisplay from "./date";
 import NeoFetch from "./neo";
 import LocationDisplay from "./position";
 import AboutMe from "./aboutme";
+import SudoDisplay from "./secret";
 
 export default function ResultCommand(props) {
   const commandList = [
     {
       command: "banner",
-      comment: "Display the super cool banner",
+      comment: "Display the super cool banner🤘",
     },
     {
       command: "neofetch",
-      comment: "Display the details about project",
+      comment: "Display the details about project✌",
     },
-    { command: "aboutme", comment: "About the creator" },
-    { command: "date", comment: "Get current time" },
-    { command: "position", comment: "Get your coordinates" },
-    { command: "history", comment: "Display all your previous commands" },
+    { command: "aboutme", comment: "About the creator😊" },
+    { command: "date", comment: "Get current time🌓" },
+    { command: "position", comment: "Get your coordinates🌐" },
+    { command: "history", comment: "Display all your previous commands😎" },
     {
       command: "help",
-      comment: "You obviously already know what this does",
+      comment: "You obviously already know what this does🤗",
     },
-    { command: "clear", comment: "Clear the terminal" },
+    { command: "clear", comment: "Clear the terminal🧹" },
+    { command: "sudo", comment: "I wonder what this command does🤔" },
   ];
   function ChooseDisplay(command) {
     switch (command.toLowerCase()) {
@@ -82,10 +84,17 @@ export default function ResultCommand(props) {
           </>
         );
         break;
+      case commandList[8].command:
+        return (
+          <>
+            <SudoDisplay showInput={props.showInput} />
+          </>
+        );
+        break;
       default:
         if (command.length === 0) {
-           return<></>
-        }else{
+          return <></>;
+        } else {
           return (
             <>
               <ErrorDisplay />
