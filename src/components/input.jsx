@@ -6,6 +6,8 @@ export default function InputCommand(props) {
   const [blink, setBlink] = useState(true);
   const [highlight, setHighlight] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const [historycommand, setHistoryCommand] = useState();
   const input_command = useRef(null);
 
   function focusInput() {
@@ -15,19 +17,33 @@ export default function InputCommand(props) {
   }
 
   useEffect(() => {
-    document.getElementById("terminal").addEventListener("click", focusInput);
+    document
+      .getElementById("focus-input-area")
+      .addEventListener("click", focusInput);
 
     return () => {
       document
-        .getElementById("terminal")
+        .getElementById("focus-input-area")
         .removeEventListener("click", focusInput);
     };
   }, []);
 
+  useEffect(() => {
+    input_command.current.focus();
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+    setHistoryCommand(props.history.length);
+  }, [submit]);
+
   return (
     <>
-      <div className="command-line">
-        <span className={highlight ? "highlighted-command" : ""}>
+      <div className="command-line" id="focus-input-area">
+        <span
+          className={highlight ? "highlighted-command" : ""}
+          style={{ zIndex: "100" }}
+        >
           {command.length > 0 ? (
             <>
               <span>{command.slice(0, position)}</span>
@@ -56,7 +72,12 @@ export default function InputCommand(props) {
           className="command-text-input"
           onSubmit={(e) => {
             e.preventDefault();
+            props.addCommand(command);
+            setSubmit(!submit);
             setCommand("");
+            setPosition(0);
+            setSelectAll(false);
+            setHighlight(false);
           }}
         >
           <input
@@ -102,21 +123,39 @@ export default function InputCommand(props) {
                     }
                   } else {
                     setPosition(0);
-                    setSelectAll(false)
+                    setSelectAll(false);
                   }
                 }
 
-                if (e.code === "ArrowLeft") {
+                if (e.key === "ArrowLeft") {
                   if (position > 0) {
                     //console.log(position);
                     setBlink(false);
                     setPosition(position - 1);
                   }
-                } else if (e.code === "ArrowRight") {
+                } else if (e.key === "ArrowRight") {
                   if (position < command.length) {
                     //console.log(position);
                     setBlink(false);
                     setPosition(position + 1);
+                  }
+                }
+
+                if (e.key === "ArrowUp") {
+                  if (props.history.length > 0) {
+                    if (historycommand > 0) {
+                      setHistoryCommand(historycommand - 1);
+                      setCommand(props.history[historycommand - 1]);
+                    }
+                  }
+                }
+
+                if (e.key === "ArrowDown") {
+                  if (props.history.length > 0) {
+                    if (historycommand < props.history.length - 1) {
+                      setHistoryCommand(historycommand + 1);
+                      setCommand(props.history[historycommand + 1]);
+                    }
                   }
                 }
               }

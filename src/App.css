@@ -13,7 +13,12 @@
   --light-yellow: #ffff7c;
   --light-blue: #9fcef0;
   --light-crystal: #a0cef0;
-  --white: #ffffff; 
+  --white: #ffffff;
+  --comment: gray;
+  --gumball-pink: #fe83c4;
+  --gumball-blue: #4daae3; 
+  --html: #E7741E;
+  --css: #0F4AC6;
 }
 
 body {
@@ -21,4 +26,13 @@ body {
   padding: 0;
   font-size: 1rem;
   font-family: monospace;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+html{
+  background-color: black;
 }
