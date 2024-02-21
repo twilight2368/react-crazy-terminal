@@ -95,5 +95,5 @@ export default function ResultCommand(props) {
         break;
     }
   }
-  return <>{ChooseDisplay(props.command.trim())}</>;
+  return <>{ChooseDisplay(props.command)}</>;
 }

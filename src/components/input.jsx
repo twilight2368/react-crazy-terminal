@@ -72,7 +72,7 @@ export default function InputCommand(props) {
           className="command-text-input"
           onSubmit={(e) => {
             e.preventDefault();
-            props.addCommand(command);
+            props.addCommand(command.trim());
             setSubmit(!submit);
             setCommand("");
             setPosition(0);
