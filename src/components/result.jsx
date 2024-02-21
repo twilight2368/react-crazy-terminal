@@ -83,11 +83,15 @@ export default function ResultCommand(props) {
         );
         break;
       default:
-        return (
-          <>
-            <ErrorDisplay />
-          </>
-        );
+        if (command.length === 0) {
+           return<></>
+        }else{
+          return (
+            <>
+              <ErrorDisplay />
+            </>
+          );
+        }
         break;
     }
   }

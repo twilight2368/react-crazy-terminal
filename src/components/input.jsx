@@ -144,8 +144,10 @@ export default function InputCommand(props) {
                 if (e.key === "ArrowUp") {
                   if (props.history.length > 0) {
                     if (historycommand > 0) {
+                      setPosition(0);
                       setHistoryCommand(historycommand - 1);
                       setCommand(props.history[historycommand - 1]);
+                      setPosition(props.history[historycommand - 1].length);
                     }
                   }
                 }
@@ -153,8 +155,10 @@ export default function InputCommand(props) {
                 if (e.key === "ArrowDown") {
                   if (props.history.length > 0) {
                     if (historycommand < props.history.length - 1) {
+                      setPosition(0);
                       setHistoryCommand(historycommand + 1);
                       setCommand(props.history[historycommand + 1]);
+                      setPosition(props.history[historycommand + 1].length);
                     }
                   }
                 }

@@ -11,7 +11,9 @@ export default function Terminal(props) {
   const [commands, setCommands] = useState([]);
 
   function addCommand(command) {
-    setHistory((prevCommands) => [...prevCommands, command.toLowerCase()]);
+    if (command.length > 0) {
+      setHistory((prevCommands) => [...prevCommands, command.toLowerCase()]);
+    }
     setCommands((prevCommands) => [...prevCommands, command.toLowerCase()]);
   }
 
