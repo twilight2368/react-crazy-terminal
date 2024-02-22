@@ -36,7 +36,7 @@ export default function InputCommand(props) {
               <span
                 className={blink ? "cursor-animation" : "cursor-no-animation"}
               >
-                {position === command.length ? (
+                {position >= command.length ? (
                   <>&nbsp;</>
                 ) : (
                   <>{command[position]}</>
@@ -120,8 +120,11 @@ export default function InputCommand(props) {
                     setPosition(position - 1);
                   }
                 } else if (e.key === "ArrowRight") {
-                   setBlink(false);
-                   setPosition(position + 1);
+                  if (position < command.length) {
+                    //console.log(position);
+                    setBlink(false);
+                    setPosition(position + 1);
+                  }
                 }
 
                 if (e.key === "ArrowUp") {
@@ -137,7 +140,6 @@ export default function InputCommand(props) {
                 if (e.key === "ArrowDown") {
                   if (props.history.length > 0) {
                     if (historycommand < props.history.length - 1) {
-                      // setPosition(0);
                       setHistoryCommand(historycommand + 1);
                       setCommand(props.history[historycommand + 1]);
                       setPosition(props.history[historycommand + 1].length);
