@@ -7,10 +7,6 @@ export default function SudoDisplay(props) {
   const [waiting, setWating] = useState(true);
   const passINPUT = useRef(null);
 
-  useEffect(() => {
-    console.log(process.env.REACT_APP_SECRET_PASSWORD);
-  }, []);
-
   return (
     <>
       <div

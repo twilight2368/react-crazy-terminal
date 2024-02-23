@@ -5,6 +5,7 @@ import "./style/style.css";
 import Banner from "./banner";
 import DisplayCommand from "./command";
 import ResultCommand from "./result";
+
 export default function Terminal(props) {
   const [firstrender, setFirstRender] = useState(true);
   const [history, setHistory] = useState([]);
@@ -21,15 +22,15 @@ export default function Terminal(props) {
     setCommands((prevCommands) => [...prevCommands, command.toLowerCase()]);
   }
 
-  useEffect(()=>{
-     console.log(
-       "%cYOU HACKED MY PASSWORD!😡",
-       "color:lightgreen; font-size:40px "
-     );
-     console.log(
-       "%cPassword: 'twilight' - I wonder what it does?🤔",
-       "color:gray; font-size:10px "
-     );
+  useEffect(() => {
+    console.log(
+      "%cYOU HACKED MY PASSWORD!😡",
+      "color:lightgreen; font-size:40px "
+    );
+    console.log(
+      "%cPassword: 'twilight' - I wonder what it does?🤔",
+      "color:gray; font-size:10px "
+    );
   }, []);
 
   function showInput(params) {
@@ -50,7 +51,11 @@ export default function Terminal(props) {
                 return (
                   <>
                     <DisplayCommand command={e} />
-                    <ResultCommand command={e} history={history} showInput={showInput} />
+                    <ResultCommand
+                      command={e}
+                      history={history}
+                      showInput={showInput}
+                    />
                   </>
                 );
               }

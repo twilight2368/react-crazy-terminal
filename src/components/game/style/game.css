@@ -1,0 +1,13 @@
+.game-area{
+    width: 50%;
+    min-width: 600px;
+    overflow: hidden;
+    position: relative;
+    height: 200px;
+    border: 2px var(--comment);
+    border-style: inset;
+    margin-bottom: 20px;
+    z-index: 100;
+}
+
+
