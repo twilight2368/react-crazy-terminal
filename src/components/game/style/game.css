@@ -4,10 +4,43 @@
     overflow: hidden;
     position: relative;
     height: 200px;
-    border: 2px var(--comment);
-    border-style: inset;
+    border: 2px var(--light-red);
+    border-style:groove;
     margin-bottom: 20px;
     z-index: 100;
+    user-select: none;
 }
 
 
+.start-game-button{
+    color: var(--light-black);
+    background-color: var(--light-red);
+    text-shadow: 1px 1px 1px var(--dark-red);
+    font-family: monospace;
+    padding-left: 10px;
+    padding-right:10px ;
+    font-weight: bold;
+    font-size: large;
+    position: absolute;
+    top:40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    border-width: 0;
+}
+
+.start-game-button:hover{
+    color: var(--dark-black);
+    background-color: var(--dark-red);
+    text-shadow: 1px 1px 1px var(--light-red);
+}
+
+.lose-game-display{
+    font-size: 2.5rem;
+     position: absolute;
+    top:40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--light-red);
+    text-shadow: 3px 3px 3px var(--dark-red);
+}
