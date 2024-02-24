@@ -8,49 +8,87 @@ export default function Game(props) {
   const [score, setScore] = useState(0);
   const [timeline, setTimeline] = useState(0);
   const [levelspeed, setLeverspeed] = useState(1);
-  const [maxDistanceLevel, setMaxDistanceLevel] = useState(500);
+  const [maxDistanceLevel, setMaxDistanceLevel] = useState(1000);
   const [dinoposition, setDinoposition] = useState(0);
   const [isJump, setIsjump] = useState(false);
-  const dinoSize = { height: 45, with: 30 };
+  const [isStart, setIsStart] = useState(true);
+  const [cactusAll, setCactusAll] = useState([]);
+  const [isOver, setOver] = useState(false);
+  const [isDown, setIsdown] = useState(false);
+
+  const dinoSize = { height: 50, width: 40 };
   const animationFrameId = useRef(null);
+  const dinoGroundPosition = 80;
 
-  function jump() {
-    if (isJump) {
-      return;
-    }
-    let jumpHeight = 140; // Adjust jump height as needed
-    let jumpSpeed = 4.5; // Adjust jump speed as needed
-    let currentPosition = dinoposition;
+  const cactusConfig = {
+    minheight: 50,
+    minwidth: 25,
+    maxheight: 65,
+    maxwidth: 30,
+  };
 
-    function jumpUp() {
-      if (currentPosition >= jumpHeight) {
-        clearInterval(interval); // Clear the interval when the dinosaur reaches the top
-        interval = setInterval(jumpDown, 10); // Start descending after reaching the peak
-      } else {
-        setDinoposition((prevPosition) => prevPosition + jumpSpeed);
-        //console.log(dinoposition);
-        currentPosition += jumpSpeed;
+  const jumpHeight = 150;
+  const jumpSpeedUp = 10;
+  const gravity = 5;
+  const MIN_POSITION_GENERATE = 400;
+  const MAX_POSTION_GENERATE = 600;
+
+  function generatePosition() {
+    return (
+      Math.random() * (MAX_POSTION_GENERATE - MIN_POSITION_GENERATE) +
+      MIN_POSITION_GENERATE
+    );
+  }
+
+  function GenerateCactus(lastCactus) {
+    const cactusElement = {
+      position: generatePosition() + lastCactus,
+      height: Math.floor(
+        Math.random() * (cactusConfig.maxheight - cactusConfig.minheight) +
+          cactusConfig.minheight
+      ),
+      width: Math.floor(
+        Math.random() * (cactusConfig.maxwidth - cactusConfig.minwidth) +
+          cactusConfig.minwidth
+      ),
+    };
+    setCactusAll((prevCacti) => [...prevCacti, cactusElement]);
+  }
+
+  function updateAllCactus(levelSpeed) {
+    const newCactus = [];
+    cactusAll.forEach((e) => {
+      if (e.position > -100) {
+        e.position -= levelSpeed;
+        newCactus.push(e);
       }
-    }
+    });
 
-    function jumpDown() {
-        if (currentPosition > 0) {
-          setDinoposition((prevPosition) => prevPosition - jumpSpeed); 
-           currentPosition -= jumpSpeed;
-          //console.log(dinoposition)
-        }else{
-          setDinoposition(0)
-          setIsjump(false);
-          clearInterval(interval); 
+    setCactusAll((pre) => newCactus);
+  }
+
+  function checkDinoCactusisCollision(dinoXposition, dinoWidth, dinoYposition) {
+    cactusAll.forEach((cactus) => {
+      if (
+        (dinoXposition >= cactus.position &&
+          dinoXposition <= cactus.position + cactus.width) ||
+        (dinoXposition + dinoWidth >= cactus.position &&
+          dinoXposition + dinoWidth <= cactus.position + cactus.width)
+      ) {
+        if (dinoYposition <= cactus.height && dinoYposition > 0) {
+          cancelAnimationFrame(animationFrameId.current);
+          setOver(true);
+        } else if (dinoYposition === 0) {
+          cancelAnimationFrame(animationFrameId.current);
+          setOver(true);
         }
-    }
-
-    let interval = setInterval(jumpUp, 10); // Start the upward animation
+      }
+    });
   }
 
   function animate(time) {
-    setScore(score + 1);
-    setTimeline(Math.floor(time));
+    setScore((pre) => pre + 1);
+    setTimeline(Math.floor(time) % 1000);
 
     if (score > maxDistanceLevel) {
       setMaxDistanceLevel((pre) => pre + 500);
@@ -73,17 +111,57 @@ export default function Game(props) {
       setGround2(1000);
     }
 
+    if (isJump) {
+      var currentpositon = dinoposition;
+      if (currentpositon < jumpHeight && !isDown) {
+        setDinoposition((pre) => pre + 0.6 * jumpSpeedUp);
+        currentpositon += 0.75 * jumpSpeedUp;
+        if (currentpositon >= jumpHeight) {
+          setIsdown(true);
+        }
+      } else if (currentpositon > 0 && isDown) {
+        setDinoposition((pre) => pre - 0.2 * levelspeed * gravity);
+        currentpositon -= 0.45 * gravity;
+      } else if (currentpositon <= 0 && isDown) {
+        setDinoposition(0);
+        setIsjump(false);
+        setIsdown(false);
+      }
+    }
+
+    checkDinoCactusisCollision(
+      dinoGroundPosition,
+      dinoSize.width,
+      dinoposition
+    );
+
+    updateAllCactus(levelspeed);
+
     animationFrameId.current = requestAnimationFrame(animate);
   }
 
   useEffect(() => {
-    animationFrameId.current = requestAnimationFrame(animate);
+    if (isOver) {
+
+      cancelAnimationFrame(animationFrameId.current);
+      return;
+    }
+
+    if (!isStart) {
+      if (cactusAll.length <= 5) {
+        if (cactusAll.length >= 1) {
+          GenerateCactus(cactusAll[cactusAll.length - 1].position);
+        } else {
+          GenerateCactus(500);
+        }
+      }
+      animationFrameId.current = requestAnimationFrame(animate);
+    }
 
     return () => {
       cancelAnimationFrame(animationFrameId.current);
     };
-  }, [ground1, ground2, score]);
-  
+  }, [ground1, ground2, score, isStart, cactusAll, isOver]);
 
   return (
     <>
@@ -92,28 +170,72 @@ export default function Game(props) {
         ref={gamearea}
         tabIndex={0}
         onKeyDown={(e) => {
-          console.log("LOL");
-
           if (e.code === "Space") {
-            setIsjump(true);
-            jump();
+            if (!isStart) {
+              if (!isOver) {
+                if (!isJump) {
+                  console.log("LOL");
+                  setIsjump(true);
+                }
+              }
+            }
           }
         }}
       >
         <div>
-          {/* <span>{Math.floor(score / 10)}</span> */}
-          {/* <StartPlayButton /> */}
-          {/* <ShowLose/> */}
+          <span className="score-display">
+            {" "}
+            Your score: <span> {Math.floor(score / 10)}</span>
+          </span>
+          {isStart ? (
+            <>
+              <button
+                className="start-game-button"
+                onClick={(e) => {
+                  setIsStart(false);
+                  gamearea.current.focus();
+                }}
+              >
+                Click here to play
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
+          {isOver ? (
+            <>
+              <ShowLose />
+            </>
+          ) : (
+            <></>
+          )}
           <Dinosaur
-            isRunning={!isJump}
+            isRunning={!isJump || isStart}
             timeline={timeline}
             dinoSize={dinoSize}
             dinoposition={dinoposition}
+            dinoGroundPosition={dinoGroundPosition}
           />
+          <>
+            {cactusAll.map((e) => {
+              return (
+                <>
+                  <Cactus
+                    position={e.position}
+                    height={e.height}
+                    width={e.width}
+                  />
+                </>
+              );
+            })}
+          </>
           <Ground ground1={ground1} ground2={ground2} />
-          <Cactus position={ground1} />
-          <Cactus position={ground2} />
         </div>
+      </div>
+      <div className="game-instruction">
+        <div className="text-display">Press</div>
+        <div className="spacekey-display">SPACE</div>
+        <div className="text-display">to jump</div>
       </div>
     </>
   );
@@ -121,7 +243,7 @@ export default function Game(props) {
 
 function Dinosaur(props) {
   const imgsrc = ["dino-run-0.png", "dino-run-1.png", "dino-stationary.png"];
-  if (props.isRunning === true) {
+  if (props.isRunning) {
     return (
       <>
         <img
@@ -132,7 +254,7 @@ function Dinosaur(props) {
             height: props.dinoSize.height + "px",
             width: props.dinoSize.width + "px",
             position: "absolute",
-            left: "80px",
+            left: props.dinoGroundPosition + "px",
             bottom: props.dinoposition + "px",
             zIndex: "3",
           }}
@@ -143,14 +265,13 @@ function Dinosaur(props) {
     return (
       <>
         <img
-          src={require("./asset/" +
-            imgsrc[2])}
+          src={require("./asset/" + imgsrc[2])}
           alt=""
           style={{
             height: props.dinoSize.height + "px",
             width: props.dinoSize.width + "px",
             position: "absolute",
-            left: "80px",
+            left: props.dinoGroundPosition + "px",
             bottom: props.dinoposition + "px",
             zIndex: "3",
           }}
@@ -197,14 +318,6 @@ function Ground(props) {
   );
 }
 
-function StartPlayButton(params) {
-  return (
-    <>
-      <button className="start-game-button">Click here to play</button>
-    </>
-  );
-}
-
 function ShowLose(params) {
   return (
     <>
@@ -219,9 +332,9 @@ function Cactus(props) {
       <img
         src={require("./asset/cactus.png")}
         alt=""
-        srcset=""
         style={{
-          height: "60px",
+          height: props.height + "px",
+          width: props.width + "px",
           position: "absolute",
           bottom: "0",
           left: props.position + "px",
@@ -229,5 +342,5 @@ function Cactus(props) {
         }}
       />
     </>
-  )
+  );
 }

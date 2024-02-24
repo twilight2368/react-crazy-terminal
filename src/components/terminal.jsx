@@ -11,9 +11,10 @@ export default function Terminal(props) {
   const [history, setHistory] = useState([]);
   const [commands, setCommands] = useState([]);
   const [passInput, setPassInput] = useState(false);
-  const [gameplay, setGameplay] = useState(false);
+
 
   function addCommand(command) {
+
     if (command.length > 0) {
       setHistory((prevCommands) => [...prevCommands, command.toLowerCase()]);
     }
@@ -22,7 +23,6 @@ export default function Terminal(props) {
     }
 
     if (command.toLowerCase() === "dino") {
-      setGameplay(true);
       setFirstRender(false);
       setCommands([]);
     }
@@ -44,6 +44,7 @@ export default function Terminal(props) {
   function showInput(params) {
     setPassInput(false);
   }
+
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function Terminal(props) {
             })}
           </div>
           <div>
-            {passInput || gameplay ? (
+            {passInput ? (
               <></>
             ) : (
               <>

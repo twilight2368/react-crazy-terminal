@@ -4,8 +4,8 @@
 
 # Future update command
 
-- [ ] weather
-- [ ] game
+- [ ] weather (API KEY NOT SAFE SO 😇)
+- [x] game ✅
 
 # Some remaining bugs
 

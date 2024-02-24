@@ -22,7 +22,6 @@ export default function ResultCommand(props) {
     { command: "aboutme", comment: "About the creator😊" },
     { command: "date", comment: "Get current time🌓" },
     { command: "position", comment: "Get your coordinates🌐" },
-    { command: "weather", comment: "Get current weather⛅" },
     { command: "dino", comment: "Dinosaur game🦖" },
     { command: "history", comment: "Display all your previous commands😎" },
     {
@@ -71,21 +70,15 @@ export default function ResultCommand(props) {
           </>
         );
         break;
+
       case commandList[5].command:
-        return (
-          <>
-            <></>
-          </>
-        );
-        break;
-      case commandList[6].command:
         return (
           <>
             <Game />
           </>
         );
         break;
-      case commandList[7].command:
+      case commandList[6].command:
         return (
           <>
             <HistoryDisplay history={props.history} />
@@ -93,14 +86,14 @@ export default function ResultCommand(props) {
         );
         break;
 
-      case commandList[8].command:
+      case commandList[7].command:
         return (
           <>
             <DisplayHelp commandList={commandList} />
           </>
         );
         break;
-      case commandList[9].command:
+      case commandList[8].command:
         return (
           <>
             <SudoDisplay showInput={props.showInput} />
