@@ -93,7 +93,7 @@ export default function ResultCommand(props) {
           </>
         );
         break;
-      case commandList[8].command:
+      case commandList[9].command:
         return (
           <>
             <SudoDisplay showInput={props.showInput} />

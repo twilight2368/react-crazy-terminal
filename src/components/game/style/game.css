@@ -11,6 +11,11 @@
     user-select: none;
 }
 
+.game-area:focus{
+    border: 2px var(--light-red);
+    border-style:groove;
+}
+
 
 .start-game-button{
     color: var(--light-black);
