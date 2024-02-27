@@ -196,3 +196,14 @@
   position: relative;
   z-index: -10;
 }
+
+.weather-display-area{
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.loading-weather{
+  color: var(--light-blue);
+  text-shadow: 2px 2px 2px var(--light-red);
+  margin-left: 2rem;
+}
