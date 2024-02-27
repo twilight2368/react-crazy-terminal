@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-crazy-terminal/static/css/main.c3a9e9a0.css",
-    "main.js": "/react-crazy-terminal/static/js/main.e31fcc72.js",
+    "main.js": "/react-crazy-terminal/static/js/main.a0612aee.js",
     "index.html": "/react-crazy-terminal/index.html",
     "main.c3a9e9a0.css.map": "/react-crazy-terminal/static/css/main.c3a9e9a0.css.map",
-    "main.e31fcc72.js.map": "/react-crazy-terminal/static/js/main.e31fcc72.js.map"
+    "main.a0612aee.js.map": "/react-crazy-terminal/static/js/main.a0612aee.js.map"
   },
   "entrypoints": [
     "static/css/main.c3a9e9a0.css",
-    "static/js/main.e31fcc72.js"
+    "static/js/main.a0612aee.js"
   ]
 }
