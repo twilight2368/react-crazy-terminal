@@ -174,7 +174,7 @@ export default function Game(props) {
             if (!isStart) {
               if (!isOver) {
                 if (!isJump) {
-                  console.log("LOL");
+                  //console.log("LOL");
                   setIsjump(true);
                 }
               }
